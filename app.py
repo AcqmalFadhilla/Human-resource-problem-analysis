@@ -2,16 +2,23 @@
 Author: Muhammad Acqmal Fadhilla Latief 109632348+AcqmalFadhilla@users.noreply.github.com
 Date: 2024-12-01 18:36:30
 LastEditors: Muhammad Acqmal Fadhilla Latief 109632348+AcqmalFadhilla@users.noreply.github.com
-LastEditTime: 2024-12-02 07:30:03
+LastEditTime: 2024-12-02 13:45:29
 FilePath: app.py
 Description: 这是默认设置,可以在设置》工具》File Description中进行配置
 """
 import streamlit as st
+import pandas as pd
+from utils import Convert
+from utils import Preprocessing
+from pickle import load
 
-
+# Intialise utils
+convert = Convert()
+preprocessing = Preprocessing()
 
 # Initialise form
 with st.form("predict"):
+    st.title("Employee Leave Prediction")
     name = st.text_input("Name:",
                          placeholder="Input your name here")
     age = st.number_input("Age:", 
@@ -19,7 +26,8 @@ with st.form("predict"):
                           max_value=75, 
                           placeholder="Input your age here")
     salary = st.number_input("Salary:",
-                             placeholder="Input your salary here")
+                             placeholder="Input your salary here",
+                             min_value=0)
     years_since_last_promotion = st.number_input("Years since last promotion:",
                                                  min_value=0,
                                                  max_value=20,
@@ -44,7 +52,7 @@ with st.form("predict"):
     
     with col2:
         department = st.radio("Department:",
-                              ["Human Resource", "Resource & Development", "Sales"])
+                              ["Human Resource", "Research & Development", "Sales"])
         work_experience = st.radio("Work experience:",
                                    ["Fresh Graduate", "Junior Employee", "Mid-level Employee", "Senior Employee"],
                                    captions=["your experience is less than 1 year",
@@ -58,15 +66,40 @@ with st.form("predict"):
     
     submit = st.form_submit_button("Predict")
     if submit:
-        st.write(f"Name: {name}")
-        st.write(f"Age: {age}")
-        st.write(f"Salary: {salary}")
-        st.write(f"Years since last promotion: {years_since_last_promotion}")
-        st.write(f"How long do you stay?: {stay}")
-        st.write(f"Work life balance: {work_life_balance}")
-        st.write(f"Work experience: {work_experience}")
-        st.write(f"Over time: {over_time}")
-
-
-
+        # Convert data
+        data = {
+            "Gender": convert.gender(gender),
+            "AgeGroup": convert.age(age),
+            "SalaryGroup": convert.salary(salary),
+            "StayGroup": convert.stay(stay),
+            "ExperienceGroup": convert.experience(work_experience),
+            "Department": convert.department(department),
+            "WorkLifeBalance": convert.work_life_balance(work_life_balance),
+            "OverTime": convert.over_time(over_time),
+            "MaritalStatus": convert.marital_status(marital_status),
+            "YearsSinceLastPromotion": int(years_since_last_promotion),
+        }
+        
+        # Convert to data frame
+        df = pd.DataFrame([data])
+        
+        # Initialise preprocessing
+        data_preprocessing = preprocessing.preprocess(df)
+        
+        # Model
+        model = load(open("models/model_knn.pkl", "rb"))
+        prediction = model.predict_proba(data_preprocessing)
+        
+        attritio_0 = prediction[0][0]
+        attritio_1 = prediction[0][1]
+        
+        probability_0 = attritio_0 * 100
+        probability_1 = attritio_1 * 100
+        
+        if attritio_0 > attritio_1:
+            st.text(f'{probability_0:.2f} dan {probability_1:.2f}')
+            st.warning(f"Employee which is name {name} has probability leave {probability_0:.2f}%")
+        else:
+            st.text(f'{probability_0:.2f} dan {probability_1:.2f}')
+            st.success(f"Employee which is name {name} has probability stay {probability_1:.2f}%")
 
