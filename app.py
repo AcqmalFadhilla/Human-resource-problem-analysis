@@ -2,7 +2,7 @@
 Author: Muhammad Acqmal Fadhilla Latief 109632348+AcqmalFadhilla@users.noreply.github.com
 Date: 2024-12-01 18:36:30
 LastEditors: Muhammad Acqmal Fadhilla Latief 109632348+AcqmalFadhilla@users.noreply.github.com
-LastEditTime: 2024-12-02 13:45:29
+LastEditTime: 2024-12-02 13:52:00
 FilePath: app.py
 Description: 这是默认设置,可以在设置》工具》File Description中进行配置
 """
@@ -97,9 +97,7 @@ with st.form("predict"):
         probability_1 = attritio_1 * 100
         
         if attritio_0 > attritio_1:
-            st.text(f'{probability_0:.2f} dan {probability_1:.2f}')
             st.warning(f"Employee which is name {name} has probability leave {probability_0:.2f}%")
         else:
-            st.text(f'{probability_0:.2f} dan {probability_1:.2f}')
             st.success(f"Employee which is name {name} has probability stay {probability_1:.2f}%")
 

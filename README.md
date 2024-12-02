@@ -19,6 +19,8 @@ Beberapa masalah bisnis yang perlu dijawab adalah:
 5. Berapa lama rata-rata seorang karyawan bertahan di perusahaan?
 6. Apakah ada hubungan antara kenaikan gaji/bonus dengan tingkat retensi karyawan?
 7. Apakah jam kerja yang panjang atau pendek memengaruhi keputusan karyawan untuk keluar?.
+8. Apakah kelompok yang sudah menikah tingkat attrition lebih tinggi?
+9. Bagaimana kita bisa memprediksi karyawan mana yang berpotensi keluar di masa depan?
 
 ### Cakupan Proyek
 
@@ -33,7 +35,12 @@ Beberapa masalah bisnis yang perlu dijawab adalah:
 - Menghitung tingkat attrition berdasarkan kelompok umur, gender, departemen, tingkat gaji, dan lainnya.
 - Menentukan durasi rata-rata seorang karyawan bekerja sebelum keluar.
 
-3. Rekomendasi Strategis
+3. Model Prediksi
+
+- Membangun model machine learning untuk memprediksi potensi attrition karyawan di masa depan berdasarkan pola historis.
+- Memberikan rekomendasi untuk meningkatkan retensi berdasarkan prediksi model.
+
+4. Rekomendasi Strategis
 
 - Memberikan rekomendasi kepada manajemen untuk mengurangi tingkat attrition melalui kebijakan seperti kenaikan gaji,
   bonus, jam kerja fleksibel, atau program kepuasan kerja.
@@ -51,9 +58,14 @@ pip install -r requirements.txt
 ```
 
 ## Business Dashboard
-<img src="Employee_Analysis.png" alt="dashboard">
+<img src="image/Employee_Analysis.png" alt="dashboard">
 
 <a href="https://lookerstudio.google.com/reporting/20abbeb8-00c6-4b5c-a080-979679ec415e">Link Dashboard</a>
+
+## Model Prediciton
+<img src="image/streamlit.png" alt="streamlit">
+
+<a href="https://human-resource-problem-analysis-jcjgcvxckb2f32ewqfhryg.streamlit.app/">Link Streamlit</a>
 
 ## Conclusion
 1. Apakah kelompok umur tertentu memiliki tingkat attrition yang lebih tinggi?
@@ -81,6 +93,9 @@ mungkin untuk berhenti dibandingkan dengan kelompok lain.
 8. Apakah kelompok yang sudah menikah tingkat attrition lebih tinggi?
 - Data tersebut menunjukkan bahwa karyawan yang masih single lebih besar kemungkinannya untuk berhenti bekerja (attrisi)
 dibandingkan dengan karyawan yang sudah menikah atau bercerai.
+9. Bagaimana kita bisa memprediksi karyawan mana yang berpotensi keluar di masa depan?
+- Dengan menggunakan model ml yang telah dibuat sebelumnya
+
 
 
 
